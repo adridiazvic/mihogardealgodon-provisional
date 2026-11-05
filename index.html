@@ -1,0 +1,333 @@
+<!doctype html>
+<html lang="es">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Web en construcción | Mi Hogar de Algodón</title>
+    <meta
+      name="description"
+      content="Estamos dando las últimas puntadas a nuestra tienda de ropa de hogar. Vuelve pronto."
+    />
+    <meta name="robots" content="noindex" />
+    <meta name="theme-color" content="#1f856b" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="preload" href="/commissioner.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fraunces-roman.woff2" as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href="/fraunces-italic.woff2" as="font" type="font/woff2" crossorigin />
+    <style>
+      /* Licencia SIL Open Font License 1.1, dentro de cada fichero (src/assets/fuentes/OFL-*.txt). */
+      @font-face {
+        font-family: "Fraunces";
+        src: url("/fraunces-roman.woff2") format("woff2");
+        font-weight: 300 700;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Fraunces";
+        src: url("/fraunces-italic.woff2") format("woff2");
+        font-weight: 300 700;
+        font-style: italic;
+        font-display: swap;
+      }
+
+      @font-face {
+        font-family: "Commissioner";
+        src: url("/commissioner.woff2") format("woff2");
+        font-weight: 300 700;
+        font-style: normal;
+        font-display: swap;
+      }
+
+      :root {
+        --panel: #fcf9f9;
+        --accent: #1f856b;
+        --accent-text: #ffffff;
+        --hero: #5e544b;
+        --sans: "Commissioner", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+        --serif: "Fraunces", Georgia, "Times New Roman", serif;
+        color-scheme: light;
+      }
+
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        -webkit-text-size-adjust: 100%;
+        text-size-adjust: 100%;
+      }
+
+      body {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        min-height: 100svh;
+        margin: 0;
+        background: var(--hero);
+        color: var(--panel);
+        font: 300 1rem/1.4 var(--sans);
+        text-align: center;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+
+      .notice-bar {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 2.75rem;
+        padding: 0.25rem 1rem;
+        background: var(--accent);
+        color: var(--accent-text);
+        font-size: 0.75rem;
+        line-height: 0.9375rem;
+        letter-spacing: 0.25px;
+      }
+
+      .notice-bar p {
+        margin: 0;
+      }
+
+      strong {
+        font-weight: 700;
+      }
+
+      /* La banda de la portada, con sus velos y degradados, pero sin foto. */
+      .band {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        padding: 1.5rem 1rem;
+        background:
+          linear-gradient(rgb(30 27 24 / 0.35), rgb(30 27 24 / 0)) top / 100% 10rem no-repeat,
+          linear-gradient(rgb(30 27 24 / 0), rgb(30 27 24 / 0.35)) bottom / 100% 55% no-repeat,
+          linear-gradient(rgb(71 64 61 / 0.4), rgb(71 64 61 / 0.4)),
+          var(--hero);
+      }
+
+      header {
+        display: flex;
+        justify-content: center;
+      }
+
+      /* El logo claro sale del oscuro, como en la cabecera de la portada. Con colores forzados, no: sobre el fondo del
+         sistema, que suele ser blanco, desaparecería (con el tema oscuro, se aclara aparte). */
+      .logo {
+        display: block;
+        width: 8.75rem;
+        height: auto;
+      }
+
+      @media (forced-colors: none) {
+        .logo {
+          filter: brightness(0) invert(1);
+        }
+      }
+
+      @media (forced-colors: active) and (prefers-color-scheme: dark) {
+        .logo {
+          filter: invert(1) hue-rotate(180deg);
+        }
+      }
+
+      main {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 1.5rem;
+        padding-top: 1.5rem;
+      }
+
+      /* En columna, el dibujo va delante del texto y se queda con el alto que el resto deja libre en la primera pantalla. */
+      .pile {
+        order: -1;
+        display: block;
+        width: auto;
+        height: auto;
+        max-width: min(100%, 22rem);
+        max-height: max(9rem, 100svh - 25rem);
+      }
+
+      .words {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      /* Por debajo de 377 px, el título baja con la pantalla: siempre son dos líneas. */
+      h1 {
+        margin: 0;
+        font: 330 min(2.5rem, 10.6vw)/1.08 var(--serif);
+      }
+
+      h1 em {
+        white-space: nowrap;
+      }
+
+      /* La raya a mano del pie y del buscador (src/components/Raya.astro), aquí a puntadas: se cosen una a una. */
+      .stitches {
+        display: block;
+        width: 15.5rem;
+        max-width: 100%;
+        height: 12px;
+        margin: 1.25rem 0;
+        fill: none;
+        stroke: currentColor;
+        stroke-width: 3;
+        stroke-linecap: round;
+        stroke-dasharray: 12 9;
+      }
+
+      @media (prefers-reduced-motion: no-preference) {
+        .stitches {
+          animation: sew 2.4s steps(12, end) 0.4s both;
+        }
+
+        @keyframes sew {
+          from {
+            clip-path: inset(0 100% 0 0);
+          }
+
+          to {
+            clip-path: inset(0 0 0 0);
+          }
+        }
+      }
+
+      .text {
+        max-width: 20rem;
+        margin: 0;
+        font-size: 1.125rem;
+        line-height: 1.5rem;
+        text-wrap: balance;
+      }
+
+      @media (min-width: 48rem) {
+        .notice-bar {
+          min-height: 1.75rem;
+        }
+
+        .band {
+          padding: 2rem 5.625% 3.75rem;
+          background-size:
+            100% 12.5rem,
+            100% 55%,
+            auto,
+            auto;
+        }
+
+        .logo {
+          width: 10.9375rem;
+        }
+
+        main {
+          gap: 2rem;
+        }
+
+        .pile {
+          max-width: 28rem;
+          max-height: max(12rem, 100svh - 29rem);
+        }
+
+        h1 {
+          font-size: 3.75rem;
+        }
+
+        .text {
+          max-width: 36rem;
+        }
+      }
+
+      /* Con anchura de sobra, el texto a la izquierda y el dibujo a la derecha, como una portada. */
+      @media (min-width: 64rem) {
+        main {
+          flex-direction: row;
+          gap: clamp(2rem, 5vw, 5rem);
+          width: 100%;
+          max-width: 80rem;
+          margin-inline: auto;
+          text-align: left;
+        }
+
+        .pile {
+          order: 0;
+          flex: 0 1 36rem;
+          min-width: 0;
+          max-width: 36rem;
+          max-height: none;
+        }
+
+        .words {
+          flex: none;
+          align-items: flex-start;
+        }
+
+        /* El ancho de la columna lo pone el título: el texto no la ensancha, para dejar sitio al dibujo. */
+        .text {
+          width: 0;
+          min-width: 100%;
+          max-width: none;
+        }
+
+        h1 {
+          font-size: clamp(3.5rem, 5vw, 4.5rem);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <aside class="notice-bar" aria-label="Avisos">
+      <p><strong>Ropa de hogar</strong> para vestir tu casa</p>
+    </aside>
+    <div class="band">
+      <header>
+        <img
+          class="logo"
+          src="/logo-oscuro-175.webp"
+          srcset="/logo-oscuro-175.webp 1x, /logo-oscuro-350.webp 2x"
+          alt="Mi Hogar de Algodón"
+          width="175"
+          height="64"
+        />
+      </header>
+      <main>
+        <div class="words">
+          <h1>
+            Estamos dando las <br />
+            <em>últimas puntadas</em>
+          </h1>
+          <svg
+            class="stitches"
+            aria-hidden="true"
+            viewBox="0 0 1200 12"
+            preserveAspectRatio="none"
+            width="1200"
+            height="12"
+          >
+            <path
+              vector-effect="non-scaling-stroke"
+              d="M2 7 C 60 3, 120 10, 180 6 S 300 4, 360 7 S 480 9, 540 6 S 660 3, 720 6 S 840 9, 900 6 S 1020 4, 1080 7 S 1170 6, 1198 5"
+            ></path>
+          </svg>
+          <p class="text">Nuestra tienda de ropa de hogar está en construcción. Vuelve pronto.</p>
+        </div>
+        <img
+          class="pile"
+          src="/ropa-de-hogar-640.webp"
+          srcset="/ropa-de-hogar-640.webp 640w, /ropa-de-hogar-1120.webp 1120w"
+          sizes="(min-width: 64rem) 36rem, (min-width: 48rem) 28rem, 22rem"
+          alt="Ilustración de una pila de ropa de hogar doblada: una manta, sábanas, toallas y un mantel de cuadros. Encima, un carrete de hilo y una aguja dando las últimas puntadas."
+          width="1120"
+          height="965"
+          fetchpriority="high"
+        />
+      </main>
+    </div>
+  </body>
+</html>
